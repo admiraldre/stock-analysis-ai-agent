@@ -99,7 +99,7 @@ RAG_GENERATOR = """
 """
 
 def predict(question, vector_index, prompt):
-    llm = ChatGoogleGenerativeAI(model="gemini-1.0-pro-latest",
+    llm = ChatGoogleGenerativeAI(model="gemini-1.0-pro",
         google_api_key=os.getenv("GEMINI_API_KEY"),
         temperature=0.1,
         convert_system_message_to_human=True,
