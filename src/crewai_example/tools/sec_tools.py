@@ -1,18 +1,11 @@
 import os
-
 import requests
-
 from langchain.tools import tool
 from langchain.text_splitter import CharacterTextSplitter
-
-# from langchain.embeddings import OpenAIEmbeddings
 from langchain_community.embeddings import OllamaEmbeddings
-
 from langchain_community.vectorstores import FAISS
-
 from sec_api import QueryApi
 from unstructured.partition.html import partition_html
-
 
 class SECTools:
     @tool("Search 10-Q form")
@@ -34,12 +27,15 @@ class SECTools:
             "sort": [{"filedAt": {"order": "desc"}}],
         }
 
-        fillings = queryApi.get_filings(query)["filings"]
-        if len(fillings) == 0:
-            return "Sorry, I couldn't find any filling for this stock, check if the ticker is correct."
-        link = fillings[0]["linkToFilingDetails"]
-        answer = SECTools.__embedding_search(link, ask)
-        return answer
+        try:
+            fillings = queryApi.get_filings(query)["filings"]
+            if len(fillings) == 0:
+                return "Sorry, I couldn't find any filling for this stock, check if the ticker is correct."
+            link = fillings[0]["linkToFilingDetails"]
+            answer = SECTools.__embedding_search(link, ask)
+            return answer
+        except Exception as e:
+            return f"Error occurred while fetching data from SEC API: {str(e)}"
 
     @tool("Search 10-K form")
     def search_10k(data):
@@ -60,12 +56,15 @@ class SECTools:
             "sort": [{"filedAt": {"order": "desc"}}],
         }
 
-        fillings = queryApi.get_filings(query)["filings"]
-        if len(fillings) == 0:
-            return "Sorry, I couldn't find any filling for this stock, check if the ticker is correct."
-        link = fillings[0]["linkToFilingDetails"]
-        answer = SECTools.__embedding_search(link, ask)
-        return answer
+        try:
+            fillings = queryApi.get_filings(query)["filings"]
+            if len(fillings) == 0:
+                return "Sorry, I couldn't find any filling for this stock, check if the ticker is correct."
+            link = fillings[0]["linkToFilingDetails"]
+            answer = SECTools.__embedding_search(link, ask)
+            return answer
+        except Exception as e:
+            return f"Error occurred while fetching data from SEC API: {str(e)}"
 
     def __embedding_search(url, ask):
         text = SECTools.__download_form_html(url)
