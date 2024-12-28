@@ -1,0 +1,14 @@
+crewai[tools]
+numpy
+scikit-learn
+tensorflow
+tensorflow_hub
+google-generativeai
+langchain-google-genai
+bs4
+yfinance
+unstructured
+langchain
+tensorflow_hub
+langchain_community
+jq
