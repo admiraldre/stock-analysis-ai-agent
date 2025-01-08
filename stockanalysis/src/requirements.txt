@@ -1,7 +1,0 @@
-langchain
-crewai
-requests
-python-dotenv
-unstructured
-faiss-cpu
-langchain-community
