@@ -1,13 +1,26 @@
-class Analyst:
-    def __init__(self):
-        pass
+import yfinance as yf
 
-    def analyze_data(self, data):
-        print("Analyzing data...")
-        # mock analysis logic
-        insights = {
-            "financial_insights": f"Revenue: {data['financials']['revenue']}, Profit: {data['financials']['profit']}",
-            "market_sentiment": data['trends'][0],
-            "news_summary": f"Key news: {data['news'][0]}"
+class AnalystAgent:
+    def fetch_company_data(self, company_name):
+        stock = yf.Ticker(company_name)
+        info = stock.info
+        return {
+            "name": info.get("longName", "Unknown"),
+            "summary": info.get("longBusinessSummary", "No summary available."),
+            "current_price": info.get("currentPrice", "N/A"),
+            "market_cap": info.get("marketCap", "N/A"),
+            "pe_ratio": info.get("trailingPE", "N/A"),
+            "recommendation": info.get("recommendationKey", "N/A")
         }
-        return insights
+
+    def analyze_data(self, company_name):
+        data = self.fetch_company_data(company_name)
+        analysis = (
+            f"{data['name']}:\n"
+            f"Market Cap: ${data['market_cap']:,}\n"
+            f"Current Price: ${data['current_price']}\n"
+            f"P/E Ratio: {data['pe_ratio']}\n"
+            f"Recommendation: {data['recommendation']}\n"
+            f"Summary: {data['summary']}"
+        )
+        return analysis

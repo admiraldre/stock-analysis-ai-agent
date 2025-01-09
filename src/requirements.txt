@@ -1,3 +1,4 @@
 crewai
-openai
+transformers
+torch
 python-dotenv

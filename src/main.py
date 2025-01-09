@@ -1,31 +1,27 @@
-from agents.researcher import Researcher
-from agents.analyst import Analyst
-from agents.investment_advisor import InvestmentAdvisor
+from agents.analyst import AnalystAgent
+from agents.investment_advisor import InvestmentAdvisorAgent
+from agents.researcher import ResearcherAgent
 
 def main():
-    print("Welcome to the Stock Analysis AI Team!")
-    company_name = input("Enter the name of the company you want to analyze: ")
-
-    # Initialize agents
-    researcher = Researcher()
-    analyst = Analyst()
-    advisor = InvestmentAdvisor()
-
-    # Research phase
-    data = researcher.gather_data(company_name)
-
-    # Analysis phase
-    insights = analyst.analyze_data(data)
-
-    # Recommendation phase
-    recommendation = advisor.provide_recommendation(insights)
-
-    print("\n--- Analysis Results ---")
-    print(f"Financial Insights: {insights['financial_insights']}")
-    print(f"Market Sentiment: {insights['market_sentiment']}")
-    print(f"News Summary: {insights['news_summary']}")
-    print(f"\n--- Investment Recommendation ---")
-    print(recommendation)
+    company_name = input("Enter the stock ticker or company name: ")
+    
+    # Initialize the agents
+    analyst = AnalystAgent()
+    investment_advisor = InvestmentAdvisorAgent()
+    researcher = ResearcherAgent()
+    
+    # Research company info with the ResearcherAgent
+    research_summary = researcher.summarize_topic(company_name)
+    print("\nResearch Summary:\n", research_summary)
+    
+    # Analyze data with the AnalystAgent
+    analyst_summary = analyst.analyze_data(company_name)
+    print("\nAnalyst Summary:\n", analyst_summary)
+    
+    # Get investment strategies from the InvestmentAdvisorAgent
+    market_conditions = f"Company: {company_name}\n{analyst_summary}"  
+    investment_advice = investment_advisor.recommend_investments(market_conditions)
+    print("\nInvestment Advice:\n", investment_advice)
 
 if __name__ == "__main__":
     main()
