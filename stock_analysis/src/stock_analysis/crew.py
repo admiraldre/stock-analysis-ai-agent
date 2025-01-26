@@ -1,9 +1,14 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 
 # If you want to run a snippet of code before or after the crew starts, 
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+llm = LLM(
+	model='ollama/mixtral',
+	temperature=0.8,
+	base_url='http://localhost:11434',
+)
 
 @CrewBase
 class StockAnalysis():
@@ -21,7 +26,7 @@ class StockAnalysis():
 	def researcher(self) -> Agent:
 		return Agent(
 			config=self.agents_config['researcher'],
-			model='mixtral',
+			llm=llm,
 			verbose=True
 		)
 
@@ -29,7 +34,7 @@ class StockAnalysis():
 	def reporting_analyst(self) -> Agent:
 		return Agent(
 			config=self.agents_config['reporting_analyst'],
-			model='mixtral',
+			llm=llm,
 			verbose=True
 		)
 
