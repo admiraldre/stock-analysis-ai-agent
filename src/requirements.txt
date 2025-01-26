@@ -1,4 +1,0 @@
-crewai
-transformers
-torch
-python-dotenv
