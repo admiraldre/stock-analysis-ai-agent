@@ -21,6 +21,7 @@ class StockAnalysis():
 	def researcher(self) -> Agent:
 		return Agent(
 			config=self.agents_config['researcher'],
+			model='mixtral',
 			verbose=True
 		)
 
@@ -28,6 +29,7 @@ class StockAnalysis():
 	def reporting_analyst(self) -> Agent:
 		return Agent(
 			config=self.agents_config['reporting_analyst'],
+			model='mixtral',
 			verbose=True
 		)
 
