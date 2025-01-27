@@ -5,8 +5,8 @@ from crewai.project import CrewBase, agent, crew, task
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 llm = LLM(
-	model='ollama/mixtral',
-	temperature=0.8,
+	model='ollama/mistral',
+	temperature=0.7,
 	base_url='http://localhost:11434',
 )
 
