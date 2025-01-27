@@ -1,4 +1,4 @@
-FROM mixtral
+FROM mistral
 
 PARAMETER temperature 0.8
 PARAMETER stop Result
