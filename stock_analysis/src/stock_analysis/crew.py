@@ -23,17 +23,25 @@ class StockAnalysis():
 	# If you would like to add tools to your agents, you can learn more about it here:
 	# https://docs.crewai.com/concepts/agents#agent-tools
 	@agent
-	def researcher(self) -> Agent:
+	def research_analyst(self) -> Agent:
 		return Agent(
-			config=self.agents_config['researcher'],
+			config=self.agents_config['research_analyst'],
 			llm=llm,
 			verbose=True
 		)
 
 	@agent
-	def reporting_analyst(self) -> Agent:
+	def financial_analyst(self) -> Agent:
 		return Agent(
-			config=self.agents_config['reporting_analyst'],
+			config=self.agents_config['financial_analyst'],
+			llm=llm,
+			verbose=True
+		)
+	
+	@agent
+	def investment_advisor(self) -> Agent:
+		return Agent(
+			config=self.agents_config['investment_advisor'],
 			llm=llm,
 			verbose=True
 		)
@@ -42,16 +50,28 @@ class StockAnalysis():
 	# task dependencies, and task callbacks, check out the documentation:
 	# https://docs.crewai.com/concepts/tasks#overview-of-a-task
 	@task
-	def research_task(self) -> Task:
+	def financial_analysis(self) -> Task:
 		return Task(
-			config=self.tasks_config['research_task'],
+			config=self.tasks_config['financial_analysis'],
 		)
 
 	@task
-	def reporting_task(self) -> Task:
+	def research(self) -> Task:
 		return Task(
-			config=self.tasks_config['reporting_task'],
+			config=self.tasks_config['research'],
 			output_file='report.md'
+		)
+	
+	@task
+	def filings_analysis(self) -> Task:
+		return Task(
+			config=self.tasks_config['filings_analysis'],
+		)
+	
+	@task
+	def recommend(self) -> Task:
+		return Task(
+			config=self.tasks_config['recommend'],
 		)
 
 	@crew
