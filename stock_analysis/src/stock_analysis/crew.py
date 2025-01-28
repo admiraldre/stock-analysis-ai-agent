@@ -50,16 +50,16 @@ class StockAnalysis():
 	# task dependencies, and task callbacks, check out the documentation:
 	# https://docs.crewai.com/concepts/tasks#overview-of-a-task
 	@task
-	def financial_analysis(self) -> Task:
-		return Task(
-			config=self.tasks_config['financial_analysis'],
-		)
-
-	@task
 	def research(self) -> Task:
 		return Task(
 			config=self.tasks_config['research'],
 			output_file='report.md'
+		)
+	
+	@task
+	def financial_analysis(self) -> Task:
+		return Task(
+			config=self.tasks_config['financial_analysis'],
 		)
 	
 	@task

@@ -1,35 +1,3 @@
-# research_task:
-#   description: >
-#     Conduct a thorough research about {topic}
-#     Make sure you find any interesting and relevant information given
-#     the current year is 2024.
-#   expected_output: >
-#     A list with 10 bullet points of the most relevant information about {topic}
-#   agent: researcher
-
-# reporting_task:
-#   description: >
-#     Review the context you got and expand each topic into a full section for a report.
-#     Make sure the report is detailed and contains any and all relevant information.
-#   expected_output: >
-#     A fully fledge reports with the mains topics, each with a full section of information.
-#     Formatted as markdown without '```'
-#   agent: reporting_analyst
-
-financial_analysis:
-  description: >
-    Conduct a thorough analysis of {topic}'s stock financial health and market performance. This includes examining key financial metrics such as
-    P/E ratio, EPS growth, revenue trends, and debt-to-equity ratio. Also, analyze the stock's performance in comparison 
-    to its industry peers and overall market trends.
-
-  expected_output: >
-    The final report must expand on the summary provided but now 
-    including a clear assessment of the stock's financial standing, its strengths and weaknesses, 
-    and how it fares against its competitors in the current market scenario.
-    Make sure to use the most recent data possible.
-
-  agent: financial_analyst
-
 research:
   description: >
     Collect and summarize recent news articles, press
@@ -43,6 +11,20 @@ research:
     Make sure to use the most recent data as possible.
 
   agent: research_analyst
+  
+financial_analysis:
+  description: >
+    Conduct a thorough analysis of {topic}'s stock financial health and market performance. This includes examining key financial metrics such as
+    P/E ratio, EPS growth, revenue trends, and debt-to-equity ratio. Also, analyze the stock's performance in comparison 
+    to its industry peers and overall market trends.
+
+  expected_output: >
+    The final report must expand on the summary provided but now 
+    including a clear assessment of the stock's financial standing, its strengths and weaknesses, 
+    and how it fares against its competitors in the current market scenario.
+    Make sure to use the most recent data possible.
+
+  agent: financial_analyst
 
 filings_analysis:
   description: >
