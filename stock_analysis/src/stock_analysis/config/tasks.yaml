@@ -18,7 +18,7 @@
 
 financial_analysis:
   description: >
-    Conduct a thorough analysis of {company_stock}'s stock financial health and market performance. This includes examining key financial metrics such as
+    Conduct a thorough analysis of {topic}'s stock financial health and market performance. This includes examining key financial metrics such as
     P/E ratio, EPS growth, revenue trends, and debt-to-equity ratio. Also, analyze the stock's performance in comparison 
     to its industry peers and overall market trends.
 
@@ -28,10 +28,12 @@ financial_analysis:
     and how it fares against its competitors in the current market scenario.
     Make sure to use the most recent data possible.
 
+  agent: financial_analyst
+
 research:
   description: >
     Collect and summarize recent news articles, press
-    releases, and market analyses related to the {company_stock} stock and its industry.
+    releases, and market analyses related to the {topic} stock and its industry.
     Pay special attention to any significant events, market sentiments, and analysts' opinions. 
     Also include upcoming events like earnings and others.
 
@@ -40,9 +42,11 @@ research:
     any notable shifts in market sentiment, and potential impacts on the stock. Also make sure to return the stock ticker as {company_stock}.
     Make sure to use the most recent data as possible.
 
+  agent: research_analyst
+
 filings_analysis:
   description: >
-    Analyze the latest 10-Q and 10-K filings from EDGAR for the stock {company_stock} in question. 
+    Analyze the latest 10-Q and 10-K filings from EDGAR for the stock {topic} in question. 
     Focus on key sections like Management's Discussion and analysis, financial statements, insider trading activity, 
     and any disclosed risks. Extract relevant data and insights that could influence
     the stock's future performance.
@@ -50,6 +54,8 @@ filings_analysis:
   expected_output: >
     Final answer must be an expanded report that now also highlights significant findings
     from these filings including any red flags or positive indicators for your customer.
+
+  agent: financial_analyst
 
 recommend:
   description: >
@@ -67,3 +73,5 @@ recommend:
     Your final answer MUST be a recommendation for your customer. It should be a full super detailed report, providing a 
     clear investment stance and strategy with supporting evidence.
     Make it pretty and well formatted for your customer.
+
+  agent: investment_advisor
