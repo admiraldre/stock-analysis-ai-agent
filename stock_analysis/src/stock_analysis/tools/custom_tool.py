@@ -3,6 +3,8 @@ from typing import Type
 from pydantic import BaseModel, Field
 
 import requests
+from dotenv import load_dotenv
+load_dotenv()
 
 class SECFilingsInput(BaseModel):
     """Input schema for the SEC Filings tool."""
