@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-from tools.custom_tool import SECFilingsTool
+from tools.custom_tool import SECFilingsTool, SerperSearchTool
 # If you want to run a snippet of code before or after the crew starts, 
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
@@ -30,6 +30,7 @@ class StockAnalysis():
 		return Agent(
 			config=self.agents_config['research_analyst'],
 			llm=llm,
+			tools=[SerperSearchTool()],
 			verbose=True
 		)
 
@@ -64,18 +65,22 @@ class StockAnalysis():
 	def financial_analysis(self) -> Task:
 		return Task(
 			config=self.tasks_config['financial_analysis'],
+			dependencies=[self.research]
 		)
 	
 	@task
 	def filings_analysis(self) -> Task:
 		return Task(
 			config=self.tasks_config['filings_analysis'],
+			dependencies=[self.financial_analysis]
 		)
 	
 	@task
 	def recommend(self) -> Task:
 		return Task(
 			config=self.tasks_config['recommend'],
+			dependencies=[self.financial_analysis, self.research, self.filings_analysis],
+			output_file='recommendation_report.md'
 		)
 
 	@crew
