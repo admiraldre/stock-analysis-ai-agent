@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys
 import warnings
-
 from stock_analysis.crew import StockAnalysis
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
@@ -11,7 +10,9 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
 
+print("################ Welcome to Stock Analysis Crew! ################")
 company_name = input("Enter the company name: ")
+
 def run():
     """
     Run the crew.
