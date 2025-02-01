@@ -5,7 +5,12 @@ description = "stock-analysis using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<=3.13"
 dependencies = [
-    "crewai[tools]>=0.86.0,<1.0.0"
+    "crewai[tools]>=0.86.0,<1.0.0",
+    "langchain>=0.3.15",
+    "langsmith>=0.1.147",
+    "matplotlib>=3.10.0",
+    "plotly>=6.0.0",
+    "yfinance>=0.2.52",
 ]
 
 [project.scripts]
