@@ -1,58 +1,31 @@
 from crewai.tools import BaseTool
-from typing import Type
+from typing import Type, ClassVar
 from pydantic import BaseModel, Field
-import os
 import requests
-from dotenv import load_dotenv
-from tools.serper_tool import SerperSearchTool
-
-load_dotenv()
 
 class SECFilingsInput(BaseModel):
-    company_name: str = Field(..., description="The name of the company to get SEC filings for.")
-    filing_type: str = Field(..., description="The type of filing, e.g., 10-Q or 10-K.")
+    company_ticker: str = Field(..., description="The stock ticker of the company (e.g., TSLA).")
+    filing_type: str = Field(..., description="The type of SEC filing, e.g., 10-Q or 10-K.")
 
 class SECFilingsTool(BaseTool):
     name: str = "SEC Filings Fetcher"
-    description: str = "Fetches the latest financial filings (e.g., 10-Q, 10-K) from the SEC API."
+    description: str = "Fetches the latest SEC filings for a given company ticker."
     args_schema: Type[BaseModel] = SECFilingsInput
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    SEC_API_KEY: ClassVar[str] = "d5443893aa14e1c2228a4d4ce2e48936a47060119fb67402992ace39e41ff666"
 
-    def get_company_ticker(self, company_name: str) -> str:
-        search_tool = SerperSearchTool()
-        search_results = search_tool._run(company_name, "stock")
-        
-        if not search_results:
-            return "Error: Unable to fetch company ticker from SERPER."
-        
-        if 'ticker' in search_results:
-            return search_results['ticker']
-        
-        return "Error: Ticker not found in SERPER search results."
+    def _run(self, company_ticker: str, filing_type: str) -> str:
+        if not self.SEC_API_KEY:
+            return "Error: Missing SEC API key."
 
-    def _run(self, company_name: str, filing_type: str) -> str:
-        api_key = os.getenv("SEC_API_API_KEY")
-        if not api_key:
-            return "Error: SEC API key is missing in environment variables."
-        
-        company_ticker = self.get_company_ticker(company_name)
-        if "Error" in company_ticker:
-            return company_ticker
+        url = "https://api.sec-api.io/filings"
+        headers = {"Authorization": f"Bearer {self.SEC_API_KEY}"}
+        params = {"ticker": company_ticker, "formType": filing_type, "size": 1}
 
-        base_url = "https://api.sec-api.io"
-        headers = {"User-Agent": "drevivar2001@gmail.com", "Authorization": f"Bearer {api_key}"}
-        params = {"q": company_ticker, "formType": filing_type, "size": 1, "sort": [{"filedAt": {"order": "desc"}}]}
-
-        response = requests.get(base_url + "/filings", headers=headers, params=params)
-        
-        if response.status_code != 200:
-            return f"Error fetching SEC filings: {response.status_code}"
-        
-        filings = response.json().get("filings", [])
-        if not filings:
-            return "No filings found."
-        
-        filing_details = filings[0]
-        return filing_details.get("linkToFilingDetails", "No filing details found.")
+        try:
+            response = requests.get(url, headers=headers, params=params, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            return data.get("filings", [{}])[0].get("linkToFilingDetails", "No filings found.")
+        except requests.RequestException as e:
+            return f"Error fetching data: {e}"
