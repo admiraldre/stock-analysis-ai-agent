@@ -9,7 +9,7 @@ from crewai.project import CrewBase, agent, crew, task
 from tools.google_serper import GoogleSerperLangChainTool
 from tools.yahoo_finance import YahooFinanceLangChainTool
 from tools.stock_visualization import StockVisualizationTool
-from langsmith import Client, traceable  # Import LangSmith client and traceable decorator
+from langsmith import Client, traceable 
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -65,10 +65,10 @@ class StockAnalysis():
             config=self.agents_config['investment_advisor'],
             llm=llm,
             tools=[StockVisualizationTool()],
-            max_iter=5,  # Increased iterations for better handling
+            max_iter=5, 
             max_execution_time=60,
             verbose=True,
-            allow_parallel_execution=False,  # Ensure sequential execution
+            allow_parallel_execution=False,  
         )
 
     
