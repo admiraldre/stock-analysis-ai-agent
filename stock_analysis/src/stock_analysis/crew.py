@@ -201,7 +201,7 @@ class StockAnalysis():
                 """
 
                 # Save the recommendation report
-                with open("recommendation_report.md", "w") as file:
+                with open("recommendation_report_{topic}.md", "w") as file:
                     file.write(recommendation_text)
 
                 logger.info("Recommendation report generated successfully.")
@@ -214,7 +214,7 @@ class StockAnalysis():
         return Task(
             config=self.tasks_config['recommend'],
             dependencies=[self.financial_analysis, self.research],
-            output_file='recommendation_report.md',
+            output_file='recommendation_report_{topic}.md',
             action=generate_recommendation
         )
 
