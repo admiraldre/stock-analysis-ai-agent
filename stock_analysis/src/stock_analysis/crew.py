@@ -20,7 +20,7 @@ langsmith_client = Client()
 
 # Initialize the LLM model (this part can be changed based on LLM setup)
 llm = LLM(
-    model='ollama/mistral',
+    model='ollama/deepseek-r1:8b',
     temperature=0.1,
     base_url='http://localhost:11434',
 )
